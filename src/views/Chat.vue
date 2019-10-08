@@ -52,8 +52,8 @@ export default {
     connect() {
       this.socket.emit('connected', this.user);
       this.socket.emit('joined', {
-        user: 'Bot',
-        message: 'Just Joined'
+        user: this.user,
+        message: 'connected to chat!'
       });
     },
     sendMessage() {
