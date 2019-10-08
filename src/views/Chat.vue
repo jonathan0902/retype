@@ -53,13 +53,15 @@ export default {
       this.socket.emit('connected', this.user);
       this.socket.emit('joined', {
         user: this.user,
-        message: 'connected to chat!'
+        message: 'connected to chat!',
+        time: new Date().toLocaleString()
       });
     },
     sendMessage() {
       this.socket.emit('chat message', {
         user: this.user,
-        message: this.message
+        message: this.message,
+        time: new Date().toLocaleString()
       });
       this.message = '';
     },

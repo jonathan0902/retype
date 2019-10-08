@@ -5,7 +5,7 @@
       v-for="message in messages"
       :message="message"
       v-bind:key="message.id">
-      <strong>{{ message.user.name }}: </strong>{{ message.message }}
+      <strong>{{ message.user.name }}: </strong>{{ message.time }} {{ message.message }}
     </div>
   </div>
 </template>
