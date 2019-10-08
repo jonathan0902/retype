@@ -1,0 +1,37 @@
+language: node_js
+
+
+dist: trusty
+
+addons:
+  apt:
+    sources:
+       - google-chrome
+    packages:
+    - google-chrome-stable
+
+node_js:
+    - "node"
+    - "10"
+    - "8"
+
+sudo: false
+
+git:
+    submodules: false
+
+before_script:
+    - npm install
+    - gem install chromium
+    - wget http://chromedriver.storage.googleapis.com/2.27/chromedriver_linux64.zip
+    - unzip chromedriver_linux64.zip
+    - sudo apt-get install libnss3
+    - sudo apt-get --only-upgrade install google-chrome-stable
+    - sudo cp chromedriver /usr/local/bin/.
+
+script:
+    - npm test
+
+after_success:
+    - npm run report-coveralls
+    - npm run report-codecov
