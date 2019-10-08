@@ -34,3 +34,13 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.chat-conversation {
+  padding: 10px 0;
+  &__message {
+    padding: 0 10px;
+    text-align: left;
+  }
+}
+</style>
