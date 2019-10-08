@@ -28,6 +28,9 @@ export default {
     this.socket.on('chat message', (data) => {
       this.messages.push(data);
     });
+    this.socket.on('joined', (data) => {
+      this.messages.push(data);
+    });
     this.socket.on('disconnect', () => {
       this.messages = [];
     });

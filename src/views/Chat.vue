@@ -51,6 +51,7 @@ export default {
   methods: {
     connect() {
       this.socket.emit('connected', this.user);
+      this.socket.emit('joined', {});
     },
     sendMessage() {
       this.socket.emit('chat message', {
