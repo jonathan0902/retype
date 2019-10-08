@@ -21,8 +21,8 @@
 
 <script>
 import io from 'socket.io-client';
-import ChatConversation from './components/ChatConversation.vue';
-import ChatUserList from './components/ChatUserList.vue';
+import ChatConversation from './../components/ChatConversation.vue';
+import ChatUserList from './../components/ChatUserList.vue';
 
 export default {
   name: 'app',
