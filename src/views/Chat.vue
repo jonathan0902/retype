@@ -53,7 +53,7 @@ export default {
       this.socket.emit('connected', this.user);
     },
     sendMessage() {
-      this.socket.emit('message', {
+      this.socket.emit('chat message', {
         user: this.user,
         message: this.message
       });

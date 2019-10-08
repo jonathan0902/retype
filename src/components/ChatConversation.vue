@@ -25,7 +25,7 @@ export default {
     };
   },
   mounted() {
-    this.socket.on('message', (data) => {
+    this.socket.on('chat message', (data) => {
       this.messages.push(data);
     });
     this.socket.on('disconnect', () => {
