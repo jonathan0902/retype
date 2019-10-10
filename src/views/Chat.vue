@@ -8,6 +8,7 @@
             <div v-for="reca in getAllReports" v-bind:key="reca.id">
               <router-link class="navText" :id="'link' + reca.id" v-on:click="report" :to="'/reports/week/' + reca.id">Week {{reca.id}}</router-link>
             </div>
+            <router-link class="navText" to="/chat">Chat</router-link>
           </div>
           <div id="right-nav">
             <div v-if="auther">
