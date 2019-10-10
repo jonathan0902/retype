@@ -1,5 +1,5 @@
 <template>
-  <div class="chat">
+  <div>
     <div class="global-nav fixed-top">
       <div id="container">
         <div class="navbar">
@@ -21,6 +21,7 @@
         </div>
       </div>
     </div>
+    <div class="chat">
     <div class="chat__wrapper" v-if="user.name">
       <div class="chat__conversation">
         <chat-conversation :socket="socket">
@@ -37,6 +38,7 @@
     <div class="chat__error" v-else>
       Error, reload page and provide valid username!
     </div>
+      </div>
       <modal name="hello-world" :height="600">
     <div class="reg-block">
       <h2>Register</h2>
@@ -119,66 +121,20 @@
 </modal>
   </div>
 </template>
-
 <script>
 import io from 'socket.io-client';
 import ChatConversation from './../components/ChatConversation.vue';
 import ChatUserList from './../components/ChatUserList.vue';
+import { Component, Vue } from 'vue-property-decorator';
+import { ValidationProvider, extend } from 'vee-validate';
+import { required, email } from 'vee-validate/dist/rules';
+import axios from 'axios';
 
 @Component({
   name: 'app',
   components: {
     ChatConversation,
     ChatUserList
-  },
-  data() {
-    return {
-      message: '',
-      socket: null,
-      user: {
-        name: null
-      }
-    };
-  },
-  created() {
-    this.user.name = prompt('Please enter your username:', '');
-    if (this.user.name) {
-      this.socket = io('https://socket-server.jhellberg.me');
-      this.socket.on('connect', () => {
-        this.connect();
-      });
-    }
-  },
-  methods: {
-    connect() {
-      this.socket.emit('connected', this.user);
-      this.socket.emit('joined', {
-        user: this.user,
-        message: 'connected to chat!',
-        time: new Date().toLocaleString()
-      });
-    },
-    sendMessage() {
-      this.socket.emit('chat message', {
-        user: this.user,
-        message: this.message,
-        time: new Date().toLocaleString()
-      });
-      this.message = '';
-    },
-    onKeyUp(event) {
-      if (event.keyCode === 13) {
-        console.log("Test")
-        this.sendMessage();
-      }
-    }
-  },
-  beforeDestroy() {
-    if (this.socket) {
-      this.socket.emit('disconnected', {
-        user: this.user
-      });
-    }
   },
 })
 export default class Home extends Vue {
@@ -197,6 +153,11 @@ export default class Home extends Vue {
   links = [];
   token = '';
   auther = false;
+  message = '';
+  socket = null;
+  user = {
+    name: null
+  };
 
   report() {
     axios.get('https://me-api.jhellberg.me/reports/week/' + this.$route.params.id)
@@ -211,6 +172,13 @@ export default class Home extends Vue {
     this.allReports();
     this.report();
     this.auth();
+    this.user.name = prompt('Please enter your username:', '');
+    if (this.user.name) {
+      this.socket = io('https://socket-server.jhellberg.me');
+      this.socket.on('connect', () => {
+        this.connect();
+      });
+    }
   }
 
   updated() {
@@ -230,6 +198,39 @@ export default class Home extends Vue {
     .then((response) => {
       this.links = response.data.id;
     });
+  }
+
+  connect() {
+    this.socket.emit('connected', this.user);
+    this.socket.emit('joined', {
+      user: this.user,
+      message: 'connected to chat!',
+      time: new Date().toLocaleString()
+    });
+  }
+
+  sendMessage() {
+    this.socket.emit('chat message', {
+      user: this.user,
+      message: this.message,
+      time: new Date().toLocaleString()
+    });
+    this.message = '';
+  }
+
+  onKeyUp(event) {
+    if (event.keyCode === 13) {
+      console.log("Test")
+      this.sendMessage();
+    }
+  }
+
+  beforeDestroy() {
+    if (this.socket) {
+      this.socket.emit('disconnected', {
+        user: this.user
+      });
+    }
   }
 
   get getAllReports() {
@@ -809,7 +810,8 @@ body, h1, h2, h3, h4, h5, h6, p, ol, ul {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin: 20px;
+  margin: 300px;
+  margin-top: 175px;
   &__wrapper {
     display: flex;
     flex-direction: row;
