@@ -173,6 +173,7 @@ export default class Home extends Vue {
     this.allReports();
     this.report();
     this.auth();
+    this.messages();
     this.user.name = prompt('Please enter your username:', '');
     if (this.user.name) {
       this.socket = io('https://socket-server.jhellberg.me');
@@ -185,6 +186,14 @@ export default class Home extends Vue {
   updated() {
     this.report();
     this.auth();
+  }
+
+  messages() {
+    axios.get('https://me-api.jhellberg.me/reports/auth')
+    .then((response) => {
+      this.mes = response;
+      console.log(response)
+    });
   }
 
   auth() {
@@ -216,6 +225,15 @@ export default class Home extends Vue {
       message: this.message,
       time: new Date().toLocaleString()
     });
+
+  register() {
+    axios.post('https://me-api.jhellberg.me/chat/save', {
+      username: this.user,
+      date: new Date().toLocaleString(),
+      text: this.message,
+    });
+    this.hide();
+  }
     this.message = '';
   }
 
@@ -357,7 +375,7 @@ export default class Home extends Vue {
 }
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 
 #home {
   height: 100%;
