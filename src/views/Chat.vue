@@ -25,10 +25,10 @@
     <div class="chat">
     <div class="chat__wrapper" v-if="user.name">
       <div class="chat__conversation">
-        <chat-conversation :socket="socket">
-        <p v-for="reca in this.mes" v-bind:key="reca._id">
+        <span v-for="reca in this.mes" v-bind:key="reca._id">
           {{ reca.username }}: {{ reca.date }} {{reca.text}}
-        </p>
+        </span>
+        <chat-conversation :socket="socket">
         </chat-conversation>
         <div class="chat__controls">
           <input @keyup="onKeyUp" class="chat__input" v-model="message" />
