@@ -5,8 +5,8 @@
         <div class="navbar">
           <div id="left-nav">
             <router-link class="navText" to="/">Jonathan Hellberg</router-link>
-            <div v-for="reca in messages" v-bind:key="reca._id">
-              <p>{{ reca.username }}: {{ reca.date }} {{ reca.text }}</p>
+            <div v-for="reca in getAllReports" v-bind:key="reca.id">
+              <router-link class="navText" :id="'link' + reca.id" v-on:click="report" :to="'/reports/week/' + reca.id">Week {{reca.id}}</router-link>
             </div>
             <router-link class="navText" to="/chat">Chat</router-link>
           </div>
@@ -25,8 +25,8 @@
     <div class="chat">
     <div class="chat__wrapper" v-if="user.name">
       <div class="chat__conversation">
-        <p v-for="reca in getAllReports" v-bind:key="reca.id">
-          <router-link class="navText" :id="'link' + reca.id" v-on:click="report" :to="'/reports/week/' + reca.id">Week {{reca.id}}</router-link>
+        <div v-for="reca in this.mes" v-bind:key="reca._id">
+          {{ reca.username }}: {{ reca.date }} {{reca.text}}
         </p>
         <chat-conversation :socket="socket">
         </chat-conversation>
@@ -162,15 +162,10 @@ export default class Home extends Vue {
   user = {
     name: null
   };
-  mes = [
-    {
-      username: "Robert",
-      date: "2018-01-32",
-      text: "Tjena",
-    },
-  ];
+  mes = [];
 
   created() {
+    this.message();
     this.auth();
     this.user.name = prompt('Please enter your username:', '');
     if (this.user.name) {
@@ -190,8 +185,6 @@ export default class Home extends Vue {
     .then((response) => {
       this.mes = response.data;
     });
-
-    return this.mes;
   }
 
   auth() {
