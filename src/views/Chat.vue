@@ -183,6 +183,8 @@ export default class Home extends Vue {
     .then((response) => {
       this.mes = response.data;
     });
+
+    return this.mes;
   }
 
   auth() {
