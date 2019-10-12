@@ -160,18 +160,7 @@ export default class Home extends Vue {
     name: null
   };
 
-  report() {
-    axios.get('https://me-api.jhellberg.me/reports/week/' + this.$route.params.id)
-    .then((response) => {
-      this.re = response.data.data;
-      this.text = response.data.data;
-    });
-    return this.re;
-  }
-
   created() {
-    this.allReports();
-    this.report();
     this.auth();
     this.messages();
     this.user.name = prompt('Please enter your username:', '');
@@ -184,7 +173,6 @@ export default class Home extends Vue {
   }
 
   updated() {
-    this.report();
     this.auth();
   }
 
@@ -200,13 +188,6 @@ export default class Home extends Vue {
     axios.get('https://me-api.jhellberg.me/reports/auth', { headers: { 'x-access-token': this.token } })
     .then((response) => {
       this.auther = response.data.data;
-    });
-  }
-
-  allReports() {
-    axios.get('https://me-api.jhellberg.me/reports')
-    .then((response) => {
-      this.links = response.data.id;
     });
   }
 
