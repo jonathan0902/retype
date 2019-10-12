@@ -165,7 +165,7 @@ export default class Home extends Vue {
   mes = [];
 
   created() {
-    this.message();
+    this.messages();
     this.auth();
     this.user.name = prompt('Please enter your username:', '');
     if (this.user.name) {
