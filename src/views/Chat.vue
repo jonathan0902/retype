@@ -166,7 +166,6 @@ export default class Home extends Vue {
 
   created() {
     this.messages();
-    this.auth();
     this.user.name = prompt('Please enter your username:', '');
     if (this.user.name) {
       this.socket = io('https://socket-server.jhellberg.me');
@@ -177,7 +176,7 @@ export default class Home extends Vue {
   }
 
   updated() {
-    this.auth();
+
   }
 
   messages() {
@@ -209,9 +208,6 @@ export default class Home extends Vue {
       message: this.message,
       time: new Date().toLocaleString()
     });
-    console.log(this.user.name)
-    console.log(new Date().toLocaleString())
-    console.log(this.message)
     axios.post('https://me-api.jhellberg.me/chat/save', {
       username: this.user.name,
       date: new Date().toLocaleString(),
