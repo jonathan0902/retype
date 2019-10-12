@@ -25,7 +25,7 @@
     <div class="chat">
     <div class="chat__wrapper" v-if="user.name">
       <div class="chat__conversation">
-        <span v-for="reca in this.mes" v-bind:key="reca._id">
+        <span class='v' v-for="reca in this.mes" v-bind:key="reca._id">
           {{ reca.username }}: {{ reca.date }} {{reca.text}}
         </span>
         <chat-conversation :socket="socket">
@@ -210,7 +210,7 @@ export default class Home extends Vue {
       time: new Date().toLocaleString()
     });
     axios.post('https://me-api.jhellberg.me/chat/save', {
-      username: this.user,
+      username: this.user.name,
       date: new Date().toLocaleString(),
       text: this.message,
     });
@@ -855,6 +855,10 @@ body, h1, h2, h3, h4, h5, h6, p, ol, ul {
     align-items: center;
     justify-content: center;
     flex-direction: column;
+  }
+  .nocenter {
+    text-align: none;
+    align-items: none;
   }
 }
 </style>
