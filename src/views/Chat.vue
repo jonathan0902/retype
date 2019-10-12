@@ -25,7 +25,7 @@
     <div class="chat">
     <div class="chat__wrapper" v-if="user.name">
       <div class="chat__conversation">
-        <span class='v' v-for="reca in this.mes" v-bind:key="reca._id">
+        <span class='nocenter' v-for="reca in this.mes" v-bind:key="reca._id">
           {{ reca.username }}: {{ reca.date }} {{reca.text}}
         </span>
         <chat-conversation :socket="socket">
