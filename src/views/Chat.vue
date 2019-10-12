@@ -210,7 +210,7 @@ export default class Home extends Vue {
       time: new Date().toLocaleString()
     });
     axios.post('https://me-api.jhellberg.me/chat/save', {
-      username: this.user.name,
+      username: this.user[0].name,
       date: new Date().toLocaleString(),
       text: this.message,
     });
