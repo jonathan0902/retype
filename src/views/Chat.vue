@@ -189,7 +189,7 @@ export default class Home extends Vue {
   }
 
   messages() {
-    axios.get('https://me-api.jhellberg.me/reports/auth')
+    axios.get('https://me-api.jhellberg.me/chat/get')
     .then((response) => {
       this.mes = response;
       console.log(response)
