@@ -5,8 +5,8 @@
         <div class="navbar">
           <div id="left-nav">
             <router-link class="navText" to="/">Jonathan Hellberg</router-link>
-            <div v-for="reca in getAllReports" v-bind:key="reca.id">
-              <router-link class="navText" :id="'link' + reca.id" v-on:click="report" :to="'/reports/week/' + reca.id">Week {{reca.id}}</router-link>
+            <div v-for="reca in messages" v-bind:key="reca._id">
+              <p>{{ reca.username }}: {{ reca.date }} {{ reca.text }}</p>
             </div>
             <router-link class="navText" to="/chat">Chat</router-link>
           </div>
@@ -25,6 +25,9 @@
     <div class="chat">
     <div class="chat__wrapper" v-if="user.name">
       <div class="chat__conversation">
+        <p v-for="reca in getAllReports" v-bind:key="reca.id">
+          <router-link class="navText" :id="'link' + reca.id" v-on:click="report" :to="'/reports/week/' + reca.id">Week {{reca.id}}</router-link>
+        </p>
         <chat-conversation :socket="socket">
         </chat-conversation>
         <div class="chat__controls">
@@ -162,7 +165,6 @@ export default class Home extends Vue {
 
   created() {
     this.auth();
-    this.messages();
     this.user.name = prompt('Please enter your username:', '');
     if (this.user.name) {
       this.socket = io('https://socket-server.jhellberg.me');
@@ -179,8 +181,7 @@ export default class Home extends Vue {
   messages() {
     axios.get('https://me-api.jhellberg.me/chat/get')
     .then((response) => {
-      this.mes = response;
-      console.log(response)
+      this.mes = response.data;
     });
   }
 
