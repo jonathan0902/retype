@@ -162,6 +162,13 @@ export default class Home extends Vue {
   user = {
     name: null
   };
+  mes = [
+    {
+      username: "Robert",
+      date: "2018-01-32",
+      text: "Tjena",
+    },
+  ];
 
   created() {
     this.auth();
